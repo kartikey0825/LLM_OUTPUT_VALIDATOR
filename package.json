@@ -1,0 +1,20 @@
+{
+  "name": "LLM_OUTPUT_VALIDATOR",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schema-based output validation console with retry correction, audit logs, and SQLite-safe persistence.",
+  "type": "module",
+  "scripts": {
+    "install:all": "pnpm install && pnpm --dir backend install && pnpm --dir frontend install",
+    "dev": "concurrently \"pnpm --dir backend run dev\" \"pnpm --dir frontend run dev\"",
+    "build": "pnpm --dir backend run build && pnpm --dir frontend run build",
+    "test": "pnpm --dir backend run test",
+    "seed": "pnpm --dir backend run seed",
+    "prisma:generate": "pnpm --dir backend prisma generate",
+    "prisma:migrate": "pnpm --dir backend prisma migrate dev --name init"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "packageManager": "pnpm@11.4.0"
+}

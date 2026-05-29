@@ -1,0 +1,11 @@
+{
+  "name": "invoice_extraction",
+  "description": "Extract invoice details from invoice text",
+  "schema": {
+    "vendorName": { "type": "string", "required": true },
+    "invoiceNumber": { "type": "string", "required": true },
+    "amount": { "type": "number", "required": true, "min": 0 },
+    "currency": { "type": "enum", "values": ["INR", "USD", "EUR"], "required": true },
+    "dueDate": { "type": "string", "required": false }
+  }
+}

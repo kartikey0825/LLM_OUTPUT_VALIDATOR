@@ -1,0 +1,9 @@
+{
+  "name": "product_review",
+  "description": "Extract sentiment, rating and issues from product review text",
+  "schema": {
+    "sentiment": { "type": "enum", "values": ["positive", "neutral", "negative"], "required": true },
+    "rating": { "type": "number", "required": true, "min": 1, "max": 5 },
+    "keyIssues": { "type": "array", "items": "string", "required": false }
+  }
+}

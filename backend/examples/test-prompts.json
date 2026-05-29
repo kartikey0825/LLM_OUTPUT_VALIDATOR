@@ -1,0 +1,26 @@
+[
+  {
+    "schemaName": "invoice_extraction",
+    "strategy": "few_shot",
+    "prompt": "Extract invoice details from this invoice: {{invoiceText}}",
+    "variables": {
+      "invoiceText": "ABC Pvt Ltd invoice INV-101 total is ₹5000 due tomorrow."
+    }
+  },
+  {
+    "schemaName": "resume_extraction",
+    "strategy": "json_instruction",
+    "prompt": "Extract resume details from this resume: {{resumeText}}",
+    "variables": {
+      "resumeText": "Kartikey Raj is a B.Tech CSE student skilled in Python, SQL, React and FastAPI."
+    }
+  },
+  {
+    "schemaName": "product_review",
+    "strategy": "function_calling",
+    "prompt": "Extract product review data from this review: {{reviewText}}",
+    "variables": {
+      "reviewText": "I loved the product. Battery is great. Rating 5 out of 5."
+    }
+  }
+]

@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SchemaDefinition {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  schemaJson  String
+  difficulty  Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  calls       LLMCall[]
+
+  @@index([createdAt])
+}
+
+model LLMCall {
+  id               String   @id @default(uuid())
+  schemaName       String
+  prompt           String
+  variables        String?
+  model            String
+  strategy         String
+  success          Boolean
+  safeMode         Boolean  @default(false)
+  partialRecovery  Boolean  @default(false)
+  correctionNeeded Boolean
+  attemptCount     Int
+  totalLatencyMs   Int
+  tokenUsage       String?
+  validatedOutput  String?
+  warnings         String?
+  createdAt        DateTime @default(now())
+
+  schema           SchemaDefinition @relation(fields: [schemaName], references: [name])
+  attempts         Attempt[]
+
+  @@index([schemaName])
+  @@index([strategy])
+  @@index([createdAt])
+  @@index([success])
+}
+
+model Attempt {
+  id              String   @id @default(uuid())
+  callId          String
+  attemptNumber   Int
+  rawResponse     String
+  parsedJson      String?
+  validationError String?
+  valid           Boolean
+  latencyMs       Int
+  createdAt       DateTime @default(now())
+
+  call            LLMCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@index([callId])
+  @@index([valid])
+  @@index([createdAt])
+}
+
+model FailureLog {
+  id              String   @id @default(uuid())
+  schemaName      String
+  prompt          String
+  model           String
+  strategy        String
+  rawResponse     String
+  validationError String
+  attemptNumber   Int
+  createdAt       DateTime @default(now())
+
+  @@index([schemaName])
+  @@index([strategy])
+  @@index([createdAt])
+}
